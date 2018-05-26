@@ -1,16 +1,16 @@
 {
-  "name": "cunning-tent-cl",
-  "version": "1.0.0",
-  "description": "Cunning Tent Client",
-  "main": "dist/index.js",
-  "typings": "dist/index",
-  "scripts": {},
-  "author": "Isaac Carol Weisberg",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^2.0.2"
-  },
-  "dependencies": {
-    "cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git"
-  }
+	"name": "cunning-tent-cl",
+	"version": "1.0.0",
+	"description": "Cunning Tent Client",
+	"main": "dist/index.js",
+	"typings": "dist/index",
+	"scripts": {},
+	"author": "Isaac Carol Weisberg",
+	"license": "ISC",
+	"devDependencies": {
+		"electron": "^2.0.2"
+	},
+	"dependencies": {
+		"cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git"
+	}
 }
