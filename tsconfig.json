@@ -9,6 +9,7 @@
 		"strictNullChecks": true,
 		"removeComments": true,
 		"declaration": true,
+		"jsx": "react",
 		"paths": {
 			"*": ["node_modules/*"]
 		}

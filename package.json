@@ -11,6 +11,10 @@
 		"electron": "^2.0.2"
 	},
 	"dependencies": {
-		"cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git"
+		"@types/react": "^16.3.14",
+		"@types/react-dom": "^16.0.5",
+		"cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git",
+		"react": "^16.4.0",
+		"react-dom": "^16.4.0"
 	}
 }
