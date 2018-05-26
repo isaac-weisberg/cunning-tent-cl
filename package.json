@@ -13,8 +13,11 @@
 	"dependencies": {
 		"@types/react": "^16.3.14",
 		"@types/react-dom": "^16.0.5",
+		"@types/react-redux": "^6.0.0",
 		"cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git",
 		"react": "^16.4.0",
-		"react-dom": "^16.4.0"
+		"react-dom": "^16.4.0",
+		"react-redux": "^5.0.7",
+		"redux": "^4.0.0"
 	}
 }
