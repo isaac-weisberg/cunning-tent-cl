@@ -1,0 +1,11 @@
+{
+  "name": "cunning-tent-cl",
+  "version": "1.0.0",
+  "description": "Cunning Tent Client",
+  "main": "dist/index.js",
+  "scripts": {
+    
+  },
+  "author": "Isaac Carol Weisberg",
+  "license": "ISC"
+}
