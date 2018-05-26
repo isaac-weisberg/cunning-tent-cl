@@ -4,8 +4,9 @@ import CuntentComponent from './CuntentComponent';
 import CuntentStore, { reducers } from './State'
 import { Actions } from './Action';
 import { Provider } from 'react-redux';
+import RootView from '../Views/RootView';
 
-export class CuntentApplication extends CuntentComponent {
+export class CuntentApplication extends CuntentComponent<{}, {}> {
     store: Store<CuntentStore, Actions.Action>
 
     constructor(props: any) {
@@ -16,7 +17,7 @@ export class CuntentApplication extends CuntentComponent {
 
     render() {
         return <Provider store={this.store}>
-
+            <RootView />
         </Provider>
     }
 }

@@ -10,14 +10,14 @@ export namespace Actions {
     }
     
     export interface DirectoryChangeAction extends Action {
-        directory: string|undefined
+        directory: string|null
     }
 
     export function isDirectoryChangeAction(action: Action): action is DirectoryChangeAction {
         return action.type == ActionType.DIR_CHANGE
     }
 
-    export function changeDirectory(path: string|undefined): DirectoryChangeAction {
+    export function changeDirectory(path: string|null): DirectoryChangeAction {
         return {
             type: ActionType.DIR_CHANGE,
             directory: path

@@ -2,14 +2,14 @@ import { combineReducers } from "redux";
 import { Actions } from "./Action";
 
 export const initial: CuntentStore = {
-    currentPath: undefined
+    currentPath: null
 }
 
 export default interface CuntentStore {
-    currentPath: string|undefined
+    currentPath: string|null
 }
 
-function path(state: string|undefined = undefined, action: Actions.Action) {
+function path(state: string|null = null, action: Actions.Action) {
     if (Actions.isDirectoryChangeAction(action)) {
         return action.directory
     } else {
