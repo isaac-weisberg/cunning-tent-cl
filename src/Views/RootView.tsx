@@ -10,21 +10,12 @@ export interface RRootViewProps {
     onPathChange: (_: string) => void
 }
 
-
-export class RRootView extends CuntentComponent<RRootViewProps, {}> {
-    constructor(props: RRootViewProps) {
-        super(props)
-        console.log("I got me props")
-        console.log(props)
-    }
-
-    render() {
-        return <div> { 
-            this.props.path != null 
-            ? this.props.path 
-            : "You are not currently in any directory." }
-        </div>
-    }
+export const RRootView = (props: RRootViewProps) => {
+    return <div> { 
+        props.path != null 
+        ? props.path 
+        : "You are not currently in any directory." }
+    </div>
 }
 
 const mapStateToProps = state => {
