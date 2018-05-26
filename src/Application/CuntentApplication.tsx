@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Store, createStore } from 'redux'
 import CuntentComponent from './CuntentComponent';
-import CuntentStore, { reducers } from './State'
+import CuntentStore, { reducers } from './CuntentStore'
 import { Actions } from './Action';
 import { Provider } from 'react-redux';
 import RootView from '../Views/RootView';

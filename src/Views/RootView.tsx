@@ -1,8 +1,7 @@
 import * as React from 'react'
-import CuntentComponent from "../Application/CuntentComponent";
-import { connect } from "react-redux";
-import CuntentStore from "../Application/State";
-import { Actions } from '../Application/Action';
+import { connect } from "react-redux"
+import { Actions } from '../Application/Action'
+import CuntentComponent from '../Application/CuntentComponent';
 
 
 export interface RRootViewProps {
@@ -10,12 +9,14 @@ export interface RRootViewProps {
     onPathChange: (_: string) => void
 }
 
-export const RRootView = (props: RRootViewProps) => {
-    return <div> { 
-        props.path != null 
-        ? props.path 
-        : "You are not currently in any directory." }
-    </div>
+export class RRootView extends CuntentComponent<RRootViewProps, {}> {
+    render() {
+        return <div> { 
+            this.props.path != null 
+            ? this.props.path 
+            : "You are not currently in any directory." }
+        </div>
+    }
 }
 
 const mapStateToProps = state => {
