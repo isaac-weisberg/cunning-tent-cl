@@ -14,7 +14,8 @@ export interface RRootViewProps {
 export class RRootView extends CuntentComponent<RRootViewProps, {}> {
     changeClicked = () => {
         electron.remote.dialog.showOpenDialog({
-            properties: ['openDirectory']
+            properties: ['openDirectory'],
+            title: this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)
         }, filepaths => {
             if (filepaths.length > 0) {
                 this.props.onPathChange(filepaths[0])
