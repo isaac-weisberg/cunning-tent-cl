@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { Actions } from '../Application/Action'
 import CuntentComponent from '../Application/CuntentComponent';
 import * as electron from 'electron'
+import LocaleKeys from '../Localize/Keys';
 
 
 export interface RRootViewProps {
@@ -27,8 +28,8 @@ export class RRootView extends CuntentComponent<RRootViewProps, {}> {
         }
 
         return <div>
-            "You are not currently in any directory."
-            <button onClick={this.changeClicked}>Choose folder</button>
+            {this.localize(LocaleKeys.TITLE_VIEW.NO_DIR_CHOSEN)}
+            <button onClick={this.changeClicked}>{this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)}</button>
         </div>
     }
 }
