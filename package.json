@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Cunning Tent Client",
   "main": "dist/index.js",
+  "typings": "dist/index",
   "scripts": {
     
   },
