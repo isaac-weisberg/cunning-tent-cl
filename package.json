@@ -4,9 +4,13 @@
   "description": "Cunning Tent Client",
   "main": "dist/index.js",
   "typings": "dist/index",
-  "scripts": {
-    
-  },
+  "scripts": {},
   "author": "Isaac Carol Weisberg",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^2.0.2"
+  },
+  "dependencies": {
+    "cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git"
+  }
 }

@@ -7,7 +7,7 @@ build:
 	tsc
 
 run: build
-	node $(BUILDDIR)$(EXEC)
+	electron $(BUILDDIR)$(EXEC)
 
 clean:
 	-rm -rf $(BUILDDIR)*
