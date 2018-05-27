@@ -53,7 +53,7 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
                 return {
                     locked: false,
                     sanitizationIssues: null,
-                    sanitizedProject: proj
+                    sanitizedProject: project
                 }
             })
         }).catch(err => {

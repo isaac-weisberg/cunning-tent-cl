@@ -3,6 +3,7 @@ import { Project } from 'cundef'
 import CuntentError from '../Error/CuntentError';
 import LocaleKeys from '../Localize/Keys';
 import { join } from 'path'
+import { JsonConvert } from 'json2typescript'
 
 export class DirWorkerError extends CuntentError { }
 
@@ -41,10 +42,12 @@ export function readCundefIn(path: string|null): Promise<Project|null> {
                 reject(errors.readError(err))
                 return
             }
-            let obj!: Project
+            let convert = new JsonConvert()
+            let obj: Project
             try {
                 let string = data.toString()
-                obj = JSON.parse(string)
+                let json = JSON.parse(string)
+                obj = convert.deserialize(json, Project)
             } catch(error) {
                 reject(errors.parsingError(error))
                 return

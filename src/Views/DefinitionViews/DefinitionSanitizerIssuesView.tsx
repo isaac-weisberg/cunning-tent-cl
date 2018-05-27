@@ -10,7 +10,7 @@ export class DefinitionSanitizerIssuesView extends CuntentComponent<{ issues: Cu
         }
 
         return <div>
-            Some issues were found.
+            { this.props.issues.map((issue, index) => <div key={index}>{issue.displayable} {JSON.stringify(issue.data)}</div> )}
         </div>
     }
 }
