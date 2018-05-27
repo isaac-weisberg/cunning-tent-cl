@@ -56,14 +56,8 @@ export class DirectoryView extends LockableComponent<DirectoryViewProps, Directo
             return super.render()
         }
         return <div>
-            { this.state.results != null
-                ? <DirectoryFlowView directoryFlow={this.state.results} />
-                : null
-            }
-            { this.state.error != null
-                ? <CuntentErrorView error={this.state.error}/>
-                : null
-            }
+            <DirectoryFlowView directoryFlow={this.state.results} />
+            <CuntentErrorView error={this.state.error}/>
             { this.state.error == null && this.state.results == null
                 ? "Nothing happened yet."
                 : null

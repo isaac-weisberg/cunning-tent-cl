@@ -41,7 +41,6 @@ export class DirectoryPickerView extends LockableComponent<DirectoryPickerViewPr
             return super.render()
         }
         return <div>
-            {this.localize(LocaleKeys.TITLE_VIEW.NO_DIR_CHOSEN)}
             <button onClick={this.changeClicked}>{this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)}</button>
         </div>
     }

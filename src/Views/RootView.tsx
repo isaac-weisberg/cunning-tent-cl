@@ -19,7 +19,10 @@ export class RRootView extends CuntentComponent<RRootViewProps, {}> {
             return <DirectoryView path={this.props.path} />
         }
 
-        return <DirectoryPickerView onPathPicked={this.props.onPathChange} />
+        return <div>
+            { this.localize(LocaleKeys.TITLE_VIEW.NO_DIR_CHOSEN) } 
+            <DirectoryPickerView onPathPicked={this.props.onPathChange} />
+        </div>
     }
 }
 
