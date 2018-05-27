@@ -2,6 +2,7 @@ import * as React from 'react'
 import { LockableComponentState, LockableComponent } from '../Application/LockableComponent';
 import { DirectoryFlow, directoryFlowAt, DirWorkerError } from '../Shack/DirWorker';
 import { CuntentErrorView } from './CuntentErrorView';
+import { DirectoryFlowView } from './DirectoryFlowView';
 
 export interface DirectoryViewProps {
     path: string
@@ -56,7 +57,7 @@ export class DirectoryView extends LockableComponent<DirectoryViewProps, Directo
         }
         return <div>
             { this.state.results != null
-                ? "results"
+                ? <DirectoryFlowView directoryFlow={this.state.results} />
                 : null
             }}
             { this.state.error != null
