@@ -55,7 +55,7 @@ export interface DirectoryFlow {
     error: DirWorkerError|null
 }
 
-export function flow(path: string): Promise<DirectoryFlow> {
+export function directoryFlowAt(path: string): Promise<DirectoryFlow> {
     let foundPath: string|null = null
 
     return findCundefIn(path).then(path => {

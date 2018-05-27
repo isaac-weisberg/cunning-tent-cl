@@ -7,7 +7,6 @@ export interface DirectoryPickerViewProps {
     onPathPicked: (_: string) => void
 }
 
-
 export class DirectoryPickerView extends LockableComponent<DirectoryPickerViewProps, LockableComponentState> {
     constructor(props) {
         super(props)
