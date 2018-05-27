@@ -5,6 +5,7 @@ import CuntentComponent from '../Application/CuntentComponent';
 import * as electron from 'electron'
 import LocaleKeys from '../Localize/Keys';
 import { DirectoryView } from './DirectoryView';
+import { DirectoryPickerView } from './DirectoryPickerView';
 
 
 export interface RRootViewProps {
@@ -13,26 +14,12 @@ export interface RRootViewProps {
 }
 
 export class RRootView extends CuntentComponent<RRootViewProps, {}> {
-    changeClicked = () => {
-        electron.remote.dialog.showOpenDialog({
-            properties: ['openDirectory'],
-            title: this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)
-        }, filepaths => {
-            if (filepaths.length > 0) {
-                this.props.onPathChange(filepaths[0])
-            }
-        })
-    }
-
     render() {
         if (this.props.path != null) {
             return <DirectoryView path={this.props.path} />
         }
 
-        return <div>
-            {this.localize(LocaleKeys.TITLE_VIEW.NO_DIR_CHOSEN)}
-            <button onClick={this.changeClicked}>{this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)}</button>
-        </div>
+        return <DirectoryPickerView onPathPicked={this.props.onPathChange} />
     }
 }
 
