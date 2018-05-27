@@ -6,10 +6,10 @@ export interface LockableComponentState {
 }
 
 export class LockableComponent<P, S extends LockableComponentState> extends CuntentComponent<P, S> {
-    render() {
-        if (this.state.locked) {
-            return <div> Wait a second, I am busy ;)</div>
+    ifNotLocked = actions => {
+        if (!this.state.locked) {
+            return actions()
         }
-        return null
+        return <div> Wait a second, I am busy ;)</div>
     }
 }

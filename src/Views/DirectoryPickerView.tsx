@@ -37,11 +37,10 @@ export class DirectoryPickerView extends LockableComponent<DirectoryPickerViewPr
     }
 
     render() {
-        if (this.state.locked) {
-            return super.render()
-        }
-        return <div>
-            <button onClick={this.changeClicked}>{this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)}</button>
-        </div>
+        return this.ifNotLocked(() => {
+            return <div>
+                <button onClick={this.changeClicked}>{this.localize(LocaleKeys.TITLE_VIEW.CHOOSE_DIR)}</button>
+            </div>
+        }) 
     }
 }
