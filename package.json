@@ -14,6 +14,7 @@
 		"@types/react": "^16.3.14",
 		"@types/react-dom": "^16.0.5",
 		"@types/react-redux": "^6.0.0",
+		"cundef": "git+https://github.com/isaac-weisberg/cundefts.git",
 		"cuntent-assembler": "git+ssh://git@bitbucket.org/isaac_weisberg/cuntent-assembler.git",
 		"react": "^16.4.0",
 		"react-dom": "^16.4.0",
