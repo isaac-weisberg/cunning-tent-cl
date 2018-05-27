@@ -3,6 +3,7 @@ import { LockableComponent, LockableComponentState } from '../Application/Lockab
 import { DirectoryFlow } from '../Shack/DirWorker';
 import { CuntentErrorView } from './CuntentErrorView';
 import { RootDefinitionView } from './DefinitionViews/RootDefinitionView';
+import { DefinitionPathView } from './DefinitionViews/DefinitionPathView';
 
 export interface DirectoryFlowViewProps {
     directoryFlow: DirectoryFlow|null
@@ -17,10 +18,7 @@ export class DirectoryFlowView extends LockableComponent<DirectoryFlowViewProps,
 
         return <div>
             <CuntentErrorView error={flow.error} />
-            { flow.path != null
-                ? "Cuntent definition found at ".concat(flow.path)
-                : "Cuntent definition not found."
-            }
+            <DefinitionPathView path={flow.path} />
             <RootDefinitionView definition={flow.project} />
         </div>
     }
