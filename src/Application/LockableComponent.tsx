@@ -6,7 +6,7 @@ export interface LockableComponentState {
 }
 
 export class LockableComponent<P, S extends LockableComponentState> extends CuntentComponent<P, S> {
-    ifNotLocked = actions => {
+    ifNotLocked = (actions: () => JSX.Element|null) => {
         if (!this.state.locked) {
             return actions()
         }
