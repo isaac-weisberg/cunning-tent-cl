@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import { Project } from 'cundef'
 import CuntentError from '../Error/CuntentError';
 import LocaleKeys from '../Localize/Keys';
+import { join } from 'path'
 
 export class DirWorkerError extends CuntentError { }
 
@@ -21,7 +22,11 @@ export function findCundefIn(path: string): Promise<string|null> {
             let cundefs = files.find(value => {
                 return value.endsWith(".cundef")
             })
-            fulfill(cundefs||null)
+            if (cundefs == undefined) {
+                fulfill(null)
+                return
+            }
+            fulfill(join(path, cundefs))
         })
     })
 }
