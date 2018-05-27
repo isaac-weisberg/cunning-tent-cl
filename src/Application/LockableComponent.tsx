@@ -1,3 +1,4 @@
+import * as React from 'react'
 import CuntentComponent from "./CuntentComponent";
 
 export interface LockableComponentState {
@@ -7,7 +8,7 @@ export interface LockableComponentState {
 export class LockableComponent<P, S extends LockableComponentState> extends CuntentComponent<P, S> {
     render() {
         if (this.state.locked) {
-            return "Wait a second, I am busy ;)"
+            return <div> Wait a second, I am busy ;)</div>
         }
         return null
     }
