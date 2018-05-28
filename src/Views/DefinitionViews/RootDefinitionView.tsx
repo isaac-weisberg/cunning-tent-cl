@@ -5,8 +5,10 @@ import { LockableComponent, LockableComponentState } from '../../Application/Loc
 import LocaleKeys from '../../Localize/Keys';
 import { SanitizedDefinitionView } from './SanitizedDefinitionView';
 import { DefinitionSanitizerIssuesView } from './DefinitionSanitizerIssuesView';
+import { DefinitionPathView } from './DefinitionPathView';
 
 export interface RootDefinitionViewProps {
+    path: string|null
     definition: Project|null
 }
 
@@ -60,15 +62,16 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
 
     render() {
         return <div>
-        { this.props.definition == null
-            ? this.localize(LocaleKeys.DEFININITION.NONE_LOADED)
-            : this.ifNotLocked(() => {
-                return <div> 
-                    <SanitizedDefinitionView project={this.props.definition} />
-                    <DefinitionSanitizerIssuesView issues={this.state.sanitizationIssues} />
-                </div>
-            })
-        }
+            <DefinitionPathView path={this.props.path} />
+            { this.props.definition == null
+                ? this.localize(LocaleKeys.DEFININITION.NONE_LOADED)
+                : this.ifNotLocked(() => {
+                    return <div> 
+                        <SanitizedDefinitionView project={this.props.definition} />
+                        <DefinitionSanitizerIssuesView issues={this.state.sanitizationIssues} />
+                    </div>
+                })
+            }
         </div>
     }
 }

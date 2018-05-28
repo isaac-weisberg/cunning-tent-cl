@@ -2,7 +2,6 @@ import * as React from 'react'
 import { DirectoryFlow } from '../Shack/DirWorker';
 import { CuntentErrorView } from './CuntentErrorView';
 import { RootDefinitionView } from './DefinitionViews/RootDefinitionView';
-import { DefinitionPathView } from './DefinitionViews/DefinitionPathView';
 import CuntentComponent from '../Application/CuntentComponent';
 
 export interface DirectoryFlowViewProps {
@@ -17,8 +16,7 @@ export class DirectoryFlowView extends CuntentComponent<DirectoryFlowViewProps, 
         }
 
         return <div>
-            <DefinitionPathView path={flow.path} />
-            <RootDefinitionView definition={flow.project} />
+            <RootDefinitionView path={flow.path} definition={flow.project} />
             <CuntentErrorView error={flow.error} />
         </div>
     }
