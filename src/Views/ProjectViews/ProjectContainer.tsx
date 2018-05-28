@@ -3,25 +3,25 @@ import { Project } from "cundef";
 import { CundefSanitizer } from 'cuntent-assembler'
 import { LockableComponent, LockableComponentState } from '../../Application/LockableComponent';
 import LocaleKeys from '../../Localize/Keys';
-import { SanitizedDefinitionView } from './SanitizedDefinitionView';
-import { DefinitionSanitizerIssuesView } from './DefinitionSanitizerIssuesView';
-import { DefinitionPathView } from './DefinitionPathView';
+import { ProjectPathView } from './ProjectPathView';
+import { ProjectView } from './ProjectView';
+import { ProjectSanitizerIssuesView } from './ProjectSanitizerIssuesView';
 
-export interface RootDefinitionViewProps {
+export interface ProjectContainerProps {
     path: string|null
-    definition: Project|null
+    project: Project|null
 }
 
-export interface RootDefinitionViewState extends LockableComponentState {
+export interface ProjectContainerState extends LockableComponentState {
     sanitizationIssues: CundefSanitizer.SanitizerIssue[]|null
 }
 
-export class RootDefinitionView extends LockableComponent<RootDefinitionViewProps, RootDefinitionViewState> {
+export class ProjectContainer extends LockableComponent<ProjectContainerProps, ProjectContainerState> {
     constructor(props) {
         super(props)
         this.state = {
             locked: false,
-            sanitizationIssues: null
+            sanitizationIssues: []
         }
         this.launchSanitization(props.definition)
     }
@@ -62,13 +62,13 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
 
     render() {
         return <div>
-            <DefinitionPathView path={this.props.path} />
-            { this.props.definition == null
-                ? this.localize(LocaleKeys.DEFININITION.NONE_LOADED)
+            <ProjectPathView path={this.props.path} />
+            { this.props.project == null
+                ? this.localize(LocaleKeys.PROJECT.NONE_LOADED)
                 : this.ifNotLocked(() => {
                     return <div> 
-                        <SanitizedDefinitionView project={this.props.definition} />
-                        <DefinitionSanitizerIssuesView issues={this.state.sanitizationIssues} />
+                        <ProjectView project={this.props.project} />
+                        <ProjectSanitizerIssuesView issues={this.state.sanitizationIssues} />
                     </div>
                 })
             }

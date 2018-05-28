@@ -7,7 +7,7 @@ export interface SanitizedDefinitionViewProps {
     project: Project|null
 }
 
-export class SanitizedDefinitionView extends LockableComponent<SanitizedDefinitionViewProps, LockableComponentState> {
+export class ProjectView extends LockableComponent<SanitizedDefinitionViewProps, LockableComponentState> {
     render() {
         if (this.props.project == null) {
             return null

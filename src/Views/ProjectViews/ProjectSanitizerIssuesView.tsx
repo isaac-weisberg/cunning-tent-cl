@@ -3,13 +3,13 @@ import { CundefSanitizer } from 'cuntent-assembler/dist';
 import CuntentComponent from '../../Application/CuntentComponent';
 import LocaleKeys from '../../Localize/Keys';
 
-export class DefinitionSanitizerIssuesView extends CuntentComponent<{ issues: CundefSanitizer.SanitizerIssue[]|null }, {}> {
+export class ProjectSanitizerIssuesView extends CuntentComponent<{ issues: CundefSanitizer.SanitizerIssue[]|null }, {}> {
     render() {
         if (this.props.issues == null) {
-            return this.localize(LocaleKeys.DEFININITION.SANITIZER_FAILED)
+            return this.localize(LocaleKeys.PROJECT.SANITIZER_FAILED)
         }
         if (this.props.issues.length == 0) {
-            return this.localize(LocaleKeys.DEFININITION.SANITIZER_FOUND_NO_ISSUES)
+            return this.localize(LocaleKeys.PROJECT.SANITIZER_FOUND_NO_ISSUES)
         }
 
         return <div>
