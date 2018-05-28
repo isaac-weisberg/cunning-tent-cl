@@ -4,7 +4,7 @@ import { Actions } from '../Application/Action'
 import CuntentComponent from '../Application/CuntentComponent';
 import * as electron from 'electron'
 import LocaleKeys from '../Localize/Keys';
-import { DirectoryView } from './DirectoryView';
+import { ProjectSearchView } from './DirectoryView';
 import { DirectoryPickerView } from './DirectoryPickerView';
 
 
@@ -16,7 +16,7 @@ export interface RRootViewProps {
 export class RRootView extends CuntentComponent<RRootViewProps, {}> {
     render() {
         if (this.props.path != null) {
-            return <DirectoryView path={this.props.path} />
+            return <ProjectSearchView path={this.props.path} />
         }
 
         return <div>

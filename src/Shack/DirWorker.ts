@@ -4,8 +4,12 @@ import CuntentError from '../Error/CuntentError';
 import LocaleKeys from '../Localize/Keys';
 import { join } from 'path'
 import { JsonConvert } from 'json2typescript'
+import { Enrichment } from 'cuntent-assembler/dist';
 
 export class DirWorkerError extends CuntentError { }
+
+const projectFileExtension = ".cundef"
+const enrichmentFileExtension = ".cuntent"
 
 const errors = {
     searchError: err => new DirWorkerError(LocaleKeys.DIR_WORKER.SEARCH_ERROR, err),
@@ -32,10 +36,7 @@ function findFileEndingWithIn(path: string, ending: string): Promise<string|null
     })
 }
 
-export function readCundefIn(path: string|null): Promise<Project|null> {
-    if (path == null) {
-        return new Promise(fulfill => fulfill(null))
-    }
+function readObjectFromJson<Type extends Object>(path: string, type: any): Promise<Type> {
     return new Promise((fulfill, reject) => {
         fs.readFile(path, (err, data) => {
             if (err) {
@@ -43,11 +44,11 @@ export function readCundefIn(path: string|null): Promise<Project|null> {
                 return
             }
             let convert = new JsonConvert()
-            let obj: Project
+            let obj: Type
             try {
                 let string = data.toString()
                 let json = JSON.parse(string)
-                obj = convert.deserialize(json, Project)
+                obj = convert.deserialize(json, type)
             } catch(error) {
                 reject(errors.parsingError(error))
                 return
@@ -57,18 +58,25 @@ export function readCundefIn(path: string|null): Promise<Project|null> {
     })
 }
 
-export interface DirectoryFlow {
+function readObjectIn<Type>(path: string|null, type: any): Promise<Type|null> {
+    if (path == null) {
+        return new Promise(fulfill => fulfill(null))
+    }
+    return readObjectFromJson<Type>(path, type)
+}
+
+export interface SearchResults<Type> {
     path: string|null
-    project: Project|null
+    project: Type|null
     error: DirWorkerError|null
 }
 
-export function directoryFlowAt(path: string): Promise<DirectoryFlow> {
+function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<SearchResults<Type>> {
     let foundPath: string|null = null
 
-    return findFileEndingWithIn(path, ".cundef").then(path => {
+    return findFileEndingWithIn(path, projectFileExtension).then(path => {
         foundPath = path
-        return readCundefIn(path)
+        return readObjectIn<Type>(path, type)
     }).then(project => {
         return {
             path: foundPath,
@@ -82,4 +90,12 @@ export function directoryFlowAt(path: string): Promise<DirectoryFlow> {
             error: err
         }
     })
+}
+
+export function findEnrichmentAt(path: string) {
+    return findObjectAt<Enrichment>(path, Enrichment, enrichmentFileExtension)
+}
+
+export function findProjectAt(path: string) {
+    return findObjectAt<Project>(path, Project, enrichmentFileExtension)
 }

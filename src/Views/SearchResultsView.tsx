@@ -1,16 +1,17 @@
 import * as React from 'react'
-import { DirectoryFlow } from '../Shack/DirWorker';
+import { SearchResults } from '../Shack/DirWorker';
 import { CuntentErrorView } from './CuntentErrorView';
 import { ProjectContainer } from './ProjectViews/ProjectContainer';
 import CuntentComponent from '../Application/CuntentComponent';
+import { Project } from 'cundef/dist';
 
-export interface DirectoryFlowViewProps {
-    directoryFlow: DirectoryFlow|null
+export interface SearchResultsViewProps {
+    results: SearchResults<Project>|null
 }
 
-export class DirectoryFlowView extends CuntentComponent<DirectoryFlowViewProps, {}> {
+export class SearchResultsView extends CuntentComponent<SearchResultsViewProps, {}> {
     render() {
-        let flow = this.props.directoryFlow
+        let flow = this.props.results
         if (flow == null) {
             return null
         }

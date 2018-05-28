@@ -1,25 +1,24 @@
 import * as React from 'react'
 import { LockableComponentState, LockableComponent } from '../Application/LockableComponent';
-import { DirectoryFlow, directoryFlowAt, DirWorkerError } from '../Shack/DirWorker';
+import { SearchResults, DirWorkerError, findProjectAt } from '../Shack/DirWorker';
 import { CuntentErrorView } from './CuntentErrorView';
-import { DirectoryFlowView } from './DirectoryFlowView';
+import { Project } from 'cundef/dist';
+import { SearchResultsView } from './SearchResultsView';
 
-export interface DirectoryViewProps {
+export interface ProjectSearchViewProps {
     path: string
 }
 
-export interface DirectoryViewState extends LockableComponentState {
-    results: DirectoryFlow|null
-    error: DirWorkerError|null
+export interface ProjectSearchViewState extends LockableComponentState {
+    results: SearchResults<Project>|null
 }
 
-export class DirectoryView extends LockableComponent<DirectoryViewProps, DirectoryViewState> {
+export class ProjectSearchView extends LockableComponent<ProjectSearchViewProps, ProjectSearchViewState> {
     constructor(props) {
         super(props)
         this.state = {
-            locked: true,
-            results: null,
-            error: null
+            locked: false,
+            results: null
         }
         this.reload(props.path)
     }
@@ -28,24 +27,21 @@ export class DirectoryView extends LockableComponent<DirectoryViewProps, Directo
         this.setState(prev => {
             return {
                 locked: true,
-                results: prev.results,
-                error: prev.error
+                results: prev.results
             }
         })
-        directoryFlowAt(path).then(flow => {
+        findProjectAt(path).then(flow => {
             this.setState(prev => {
                 return {
                     locked: false,
-                    results: flow,
-                    error: null
+                    results: flow
                 }
             })
         }).catch(error => {
             this.setState(prev => {
                 return {
                     locked: false,
-                    results: null,
-                    error: error
+                    results: null
                 }
             })
         })
@@ -54,10 +50,9 @@ export class DirectoryView extends LockableComponent<DirectoryViewProps, Directo
     render() {
         return this.ifNotLocked(() => {
             return <div>
-                <DirectoryFlowView directoryFlow={this.state.results} />
-                <CuntentErrorView error={this.state.error}/>
-                { this.state.error == null && this.state.results == null
-                    ? "Nothing happened yet."
+                <SearchResultsView results={this.state.results} />
+                { this.state.results == null
+                    ? "Nothing happened yet or have already crashed."
                     : null
                 }
             </div>
