@@ -67,8 +67,7 @@ export class ProjectContainer extends LockableComponent<ProjectContainerProps, P
                 ? this.localize(LocaleKeys.PROJECT.NONE_LOADED)
                 : this.ifNotLocked(() => {
                     return <div> 
-                        <ProjectView project={this.props.project} />
-                        <ProjectSanitizerIssuesView issues={this.state.sanitizationIssues} />
+                        <ProjectView project={this.props.project!} sanitizationIssues={this.state.sanitizationIssues}/>
                     </div>
                 })
             }
