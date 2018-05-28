@@ -13,7 +13,7 @@ const errors = {
     parsingError: err => new DirWorkerError(LocaleKeys.DIR_WORKER.PARSING_ERROR, err),
 }
 
-export function findCundefIn(path: string): Promise<string|null> {
+function findFileEndingWithIn(path: string, ending: string): Promise<string|null> {
     return new Promise((fulfill, reject) => {
         fs.readdir(path, (err, files) => {
             if (err) {
@@ -21,7 +21,7 @@ export function findCundefIn(path: string): Promise<string|null> {
                 return
             }
             let cundefs = files.find(value => {
-                return value.endsWith(".cundef")
+                return value.endsWith(ending)
             })
             if (cundefs == undefined) {
                 fulfill(null)
@@ -66,7 +66,7 @@ export interface DirectoryFlow {
 export function directoryFlowAt(path: string): Promise<DirectoryFlow> {
     let foundPath: string|null = null
 
-    return findCundefIn(path).then(path => {
+    return findFileEndingWithIn(path, ".cundef").then(path => {
         foundPath = path
         return readCundefIn(path)
     }).then(project => {
