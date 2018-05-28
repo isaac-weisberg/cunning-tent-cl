@@ -2,7 +2,7 @@ import * as React from 'react'
 import {  Project } from "cundef";
 import { LockableComponentState, LockableComponent } from "../../Application/LockableComponent";
 import LocaleKeys from '../../Localize/Keys';
-import DeclarationView from './DeclarationViews/DeclarationView';
+import DeclarationArrayView from './DeclarationViews/DeclarationArrayView';
 import { CundefSanitizer } from 'cuntent-assembler/dist';
 import { ProjectSanitizerIssuesView } from './ProjectSanitizerIssuesView';
 
@@ -18,7 +18,7 @@ export class ProjectView extends LockableComponent<SanitizedDefinitionViewProps,
             { this.localize(LocaleKeys.PROJECT.TITLE).concat(': ', this.props.project.title) } <br />
             { this.localize(LocaleKeys.PROJECT.CLASSNAME.concat(': ', this.props.project.classname)) } <br />
             <ProjectSanitizerIssuesView issues={this.props.sanitizationIssues} />
-            <DeclarationView decl={this.props.project.generals} />
+            <DeclarationArrayView decl={this.props.project.generals} />
         </div>
     }
 }
