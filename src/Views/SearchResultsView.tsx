@@ -17,7 +17,7 @@ export class SearchResultsView extends CuntentComponent<SearchResultsViewProps, 
         }
 
         return <div>
-            <ProjectContainer path={flow.path} project={flow.project} />
+            <ProjectContainer path={flow.path} project={flow.object} />
             <CuntentErrorView error={flow.error} />
         </div>
     }

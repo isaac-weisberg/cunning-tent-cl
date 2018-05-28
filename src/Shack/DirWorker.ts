@@ -67,7 +67,7 @@ function readObjectIn<Type>(path: string|null, type: any): Promise<Type|null> {
 
 export interface SearchResults<Type> {
     path: string|null
-    project: Type|null
+    object: Type|null
     error: DirWorkerError|null
 }
 
@@ -80,13 +80,13 @@ function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<S
     }).then(project => {
         return {
             path: foundPath,
-            project: project,
+            object: project,
             error: null
         }
     }).catch(err => {
         return {
             path: foundPath,
-            project: null,
+            object: null,
             error: err
         }
     })
