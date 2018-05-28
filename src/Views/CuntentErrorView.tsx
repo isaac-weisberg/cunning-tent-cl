@@ -12,7 +12,7 @@ export class CuntentErrorView extends CuntentComponent<CuntentErrorViewProps, {}
             return null
         }
         return <div>
-            CuntentErrorView: { JSON.stringify(this.props.error.message) }
+            CuntentErrorView: { this.props.error.message }
         </div>
     }
 }

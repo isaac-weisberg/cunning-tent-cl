@@ -17,9 +17,9 @@ export class DirectoryFlowView extends CuntentComponent<DirectoryFlowViewProps, 
         }
 
         return <div>
-            <CuntentErrorView error={flow.error} />
             <DefinitionPathView path={flow.path} />
             <RootDefinitionView definition={flow.project} />
+            <CuntentErrorView error={flow.error} />
         </div>
     }
 }
