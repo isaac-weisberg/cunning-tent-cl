@@ -11,7 +11,6 @@ export interface RootDefinitionViewProps {
 }
 
 export interface RootDefinitionViewState extends LockableComponentState {
-    sanitizedProject: Project|null
     sanitizationIssues: CundefSanitizer.SanitizerIssue[]|null
 }
 
@@ -20,20 +19,15 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
         super(props)
         this.state = {
             locked: false,
-            sanitizationIssues: null,
-            sanitizedProject: null
+            sanitizationIssues: null
         }
         this.launchSanitization(props.definition)
     }
 
     sanitization = (project: Project) => {
-        return new Promise<Project>((fulfill, reject) => {
+        return new Promise<CundefSanitizer.SanitizerIssue[]>((fulfill, reject) => {
             let issues = CundefSanitizer.sanitize(project)
-            if (issues.length > 0) {
-                reject(issues)
-                return
-            }
-            fulfill(project)
+            fulfill(issues)
         })
     }
 
@@ -44,24 +38,21 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
         this.setState(prev => {
             return {
                 locked: true,
-                sanitizationIssues: prev.sanitizationIssues,
-                sanitizedProject: prev.sanitizedProject
+                sanitizationIssues: prev.sanitizationIssues
             }
         })
-        this.sanitization(project).then(proj => {
+        this.sanitization(project).then(issues => {
             this.setState(prev => {
                 return {
                     locked: false,
-                    sanitizationIssues: null,
-                    sanitizedProject: project
+                    sanitizationIssues: issues
                 }
             })
         }).catch(err => {
             this.setState(prev => {
                 return {
                     locked: false,
-                    sanitizationIssues: err,
-                    sanitizedProject: project
+                    sanitizationIssues: null
                 }
             })
         })
@@ -73,7 +64,7 @@ export class RootDefinitionView extends LockableComponent<RootDefinitionViewProp
             ? this.localize(LocaleKeys.DEFININITION.NONE_LOADED)
             : this.ifNotLocked(() => {
                 return <div> 
-                    <SanitizedDefinitionView project={this.state.sanitizedProject} />
+                    <SanitizedDefinitionView project={this.props.definition} />
                     <DefinitionSanitizerIssuesView issues={this.state.sanitizationIssues} />
                 </div>
             })

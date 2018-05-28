@@ -5,7 +5,10 @@ import LocaleKeys from '../../Localize/Keys';
 
 export class DefinitionSanitizerIssuesView extends CuntentComponent<{ issues: CundefSanitizer.SanitizerIssue[]|null }, {}> {
     render() {
-        if (this.props.issues == null || this.props.issues.length == 0) {
+        if (this.props.issues == null) {
+            return this.localize(LocaleKeys.DEFININITION.SANITIZER_FAILED)
+        }
+        if (this.props.issues.length == 0) {
             return this.localize(LocaleKeys.DEFININITION.SANITIZER_FOUND_NO_ISSUES)
         }
 
