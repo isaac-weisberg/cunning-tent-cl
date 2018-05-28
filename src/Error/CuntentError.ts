@@ -3,6 +3,7 @@ export default class CuntentError {
     message: string
 
     constructor(msg: string, error: any|null = null) {
+        this.message = msg
         this.underlyingError = null
     }
 }
