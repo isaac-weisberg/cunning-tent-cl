@@ -4,7 +4,7 @@ import { Actions } from '../Application/Action'
 import CuntentComponent from '../Application/CuntentComponent';
 import * as electron from 'electron'
 import LocaleKeys from '../Localize/Keys';
-import { ProjectSearchView } from './DirectoryView';
+import { ProjectSearchView } from './ProjectSearchView';
 import { DirectoryPickerView } from './DirectoryPickerView';
 
 
