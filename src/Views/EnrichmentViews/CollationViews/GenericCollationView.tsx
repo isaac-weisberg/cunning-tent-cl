@@ -12,7 +12,7 @@ export class GenericCollationView<Type extends GenericCollation> extends Cuntent
         return this.localizePair(LocaleKeys.ASSET_COLLATION.STRING_KEYS, JSON.stringify(this.props.collation.customStringKeys))
     }
 
-    draw = () => {
+    draw() {
         return [ <div> { this.drawCodepath() } { this.drawStringKeys() } </div> ]
     }
 

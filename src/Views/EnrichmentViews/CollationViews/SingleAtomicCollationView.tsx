@@ -14,7 +14,7 @@ export class SingleAtomicCollationView<Type extends SingleAtomicCollation> exten
         </div>
     }
 
-    draw = () => {
+    draw() {
         return super.draw().concat( [ this.drawAssets() ] )
     }
 }

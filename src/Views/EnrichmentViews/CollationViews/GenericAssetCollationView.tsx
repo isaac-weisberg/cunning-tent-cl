@@ -14,7 +14,7 @@ export class GenericAssetCollationView<Type extends GenericAssetCollation> exten
         </div>
     }
 
-    draw = () => {
+    draw() {
         return super.draw().concat(this.drawAssets())
     }
 }

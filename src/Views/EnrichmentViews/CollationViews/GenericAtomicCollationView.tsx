@@ -10,7 +10,7 @@ export class GenericAtomicCollationView<Type extends GenericAtomicCollation> ext
         </div> 
     }
 
-    draw = () => {
+    draw() {
         return super.draw().concat([ this.drawRoot() ])
     }
 }
