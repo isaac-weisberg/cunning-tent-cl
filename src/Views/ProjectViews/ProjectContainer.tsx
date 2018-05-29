@@ -3,20 +3,16 @@ import { Project } from "cundef";
 import { CundefSanitizer } from 'cuntent-assembler'
 import { LockableComponent, LockableComponentState } from '../../Application/LockableComponent';
 import LocaleKeys from '../../Localize/Keys';
-import { ProjectPathView } from './ProjectPathView';
 import { ProjectView } from './ProjectView';
 import { ProjectSanitizerIssuesView } from './ProjectSanitizerIssuesView';
-
-export interface ProjectContainerProps {
-    path: string|null
-    project: Project|null
-}
+import { GenericSearchResultsContainer } from '../Generic/GenericSearchView';
+import { GenericPathView } from '../Generic/GenericPathView';
 
 export interface ProjectContainerState extends LockableComponentState {
     sanitizationIssues: CundefSanitizer.SanitizerIssue[]|null
 }
 
-export class ProjectContainer extends LockableComponent<ProjectContainerProps, ProjectContainerState> {
+export class ProjectContainer extends GenericSearchResultsContainer<Project, ProjectContainerState> {
     constructor(props) {
         super(props)
         this.state = {
@@ -62,12 +58,12 @@ export class ProjectContainer extends LockableComponent<ProjectContainerProps, P
 
     render() {
         return <div>
-            <ProjectPathView path={this.props.path} />
-            { this.props.project == null
+            <GenericPathView path={this.props.path} prepend={this.localize(LocaleKeys.PROJECT.FOUND_AT)} ifNull={this.localize(LocaleKeys.PROJECT.NONE_FOUND)} />
+            { this.props.result == null
                 ? this.localize(LocaleKeys.PROJECT.NONE_LOADED)
                 : this.ifNotLocked(() => {
                     return <div> 
-                        <ProjectView project={this.props.project!} sanitizationIssues={this.state.sanitizationIssues}/>
+                        <ProjectView project={this.props.result!} sanitizationIssues={this.state.sanitizationIssues}/>
                     </div>
                 })
             }
