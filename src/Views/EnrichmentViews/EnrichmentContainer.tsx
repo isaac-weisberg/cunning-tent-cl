@@ -6,7 +6,7 @@ import { LockableComponentState } from '../../Application/LockableComponent';
 export class EnrichmentContainer extends GenericSearchResultsContainer<Enrichment, LockableComponentState> {
     render() {
         return <div>
-            { JSON.stringify(this.props.result) }
+            { JSON.stringify(this.props) }
         </div>
     }
 }

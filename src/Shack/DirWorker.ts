@@ -98,6 +98,6 @@ export namespace DirWorker {
     }
     
     export function findProjectAt(path: string) {
-        return findObjectAt<Project>(path, Project, enrichmentFileExtension)
+        return findObjectAt<Project>(path, Project, projectFileExtension)
     }
 }
