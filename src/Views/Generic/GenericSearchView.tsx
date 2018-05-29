@@ -4,7 +4,7 @@ import { DirWorker } from '../../Shack/DirWorker';
 import CuntentComponent from '../../Application/CuntentComponent';
 import { CuntentErrorView } from '../CuntentErrorView';
 
-export class GenericSearchResultsContainer<ResultType, State extends LockableComponentState> extends LockableComponent<{ path: string|null, result: ResultType|null }, State> {
+export class GenericSearchResultsContainer<ResultType, Props, State extends LockableComponentState> extends LockableComponent<Props&{ path: string|null, result: ResultType|null }, State> {
 
 }
 

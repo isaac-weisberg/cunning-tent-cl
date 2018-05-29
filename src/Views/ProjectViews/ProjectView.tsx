@@ -3,22 +3,13 @@ import {  Project } from "cundef";
 import { LockableComponentState, LockableComponent } from "../../Application/LockableComponent";
 import LocaleKeys from '../../Localize/Keys';
 import DeclarationArrayView from './DeclarationViews/DeclarationArrayView';
-import { CundefSanitizer } from 'cuntent-assembler/dist';
-import { ProjectSanitizerIssuesView } from './ProjectSanitizerIssuesView';
 
-
-export interface SanitizedDefinitionViewProps {
-    project: Project
-    sanitizationIssues: CundefSanitizer.SanitizerIssue[]|null
-}
-
-export class ProjectView extends LockableComponent<SanitizedDefinitionViewProps, LockableComponentState> {
+export class ProjectView extends LockableComponent<{ result: Project }, LockableComponentState> {
     render() {
         return <div>
-            { this.localize(LocaleKeys.PROJECT.TITLE).concat(': ', this.props.project.title) } <br />
-            { this.localize(LocaleKeys.PROJECT.CLASSNAME.concat(': ', this.props.project.classname)) } <br />
-            <ProjectSanitizerIssuesView issues={this.props.sanitizationIssues} />
-            <DeclarationArrayView decl={this.props.project.generals} />
+            { this.localize(LocaleKeys.PROJECT.TITLE).concat(': ', this.props.result.title) } <br />
+            { this.localize(LocaleKeys.PROJECT.CLASSNAME.concat(': ', this.props.result.classname)) } <br />
+            <DeclarationArrayView decl={this.props.result.generals} />
         </div>
     }
 }

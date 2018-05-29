@@ -75,7 +75,7 @@ export namespace DirWorker {
     function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<SearchResults<Type>> {
         let foundPath: string|null = null
     
-        return findFileEndingWithIn(path, projectFileExtension).then(path => {
+        return findFileEndingWithIn(path, fileext).then(path => {
             foundPath = path
             return readObjectIn<Type>(path, type)
         }).then(project => {

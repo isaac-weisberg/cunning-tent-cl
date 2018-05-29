@@ -2,8 +2,8 @@ import * as React from 'react'
 import CuntentComponent from '../../Application/CuntentComponent';
 import { GenericSearchView } from '../Generic/GenericSearchView';
 import { DirWorker } from '../../Shack/DirWorker';
-import { ProjectContainer } from '../ProjectViews/ProjectContainer';
 import { EnrichmentContainer } from '../EnrichmentViews/EnrichmentContainer';
+import { ProjectContainer } from '../ProjectViews/ProjectContainer';
 
 export class DirectoryContainer extends CuntentComponent<{ path: string }, {}> {
     render() {
