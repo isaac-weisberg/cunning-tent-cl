@@ -4,10 +4,6 @@ import { DirWorker } from '../../Shack/DirWorker';
 import CuntentComponent from '../../Application/CuntentComponent';
 import { CuntentErrorView } from '../CuntentErrorView';
 
-export class GenericSearchResultsContainer<ResultType, Props, State extends LockableComponentState> extends LockableComponent<Props&{ result: DirWorker.SearchResults<ResultType> }, State> {
-
-}
-
 export class GenericSearchView<ResultType> extends LockableComponent<{ path: string, view: any, searcher: (_: string) => Promise<DirWorker.SearchResults<ResultType>> }, { locked: boolean, results: DirWorker.SearchResults<ResultType>|null }> {
     constructor(props) {
         super(props)

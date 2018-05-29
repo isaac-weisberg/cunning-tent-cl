@@ -1,10 +1,11 @@
 import * as React from 'react'
-import { GenericSearchResultsContainer } from './GenericSearchView';
 import { GenericPathView } from './GenericPathView';
-import { LockableComponentState } from '../../Application/LockableComponent';
 import { CuntentErrorView } from '../CuntentErrorView';
+import { LockableComponentState, LockableComponent } from '../../Application/LockableComponent';
+import { DirWorker } from '../../Shack/DirWorker';
 
-export interface GenericContainerProps {
+export interface GenericContainerProps<ResultType> {
+    result: DirWorker.SearchResults<ResultType>
     pathStrings: {
         prepend: string
         ifNull: string
@@ -13,7 +14,9 @@ export interface GenericContainerProps {
     view: any
 }
 
-export class GenericContainer<ResultType> extends GenericSearchResultsContainer<ResultType, GenericContainerProps, LockableComponentState> {
+export class GenericContainer<ResultType> extends LockableComponent<GenericContainerProps<ResultType>, LockableComponentState> {
+    state = { locked: false }
+
     render() {
         return <div>
             <GenericPathView path={this.props.result.path} prepend={this.props.pathStrings.prepend} ifNull={this.props.pathStrings.ifNull} />

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Enrichment } from 'cuntent-assembler/dist';
-import { GenericSearchResultsContainer } from '../Generic/GenericSearchView';
 import { LockableComponentState } from '../../Application/LockableComponent';
 import { GenericContainer } from '../Generic/GenericContainer';
 import { EnrichmentView } from './EnrichmentView';
