@@ -4,7 +4,7 @@ import { DirWorker } from '../../Shack/DirWorker';
 import CuntentComponent from '../../Application/CuntentComponent';
 import { CuntentErrorView } from '../CuntentErrorView';
 
-export class GenericSearchResultsContainer<ResultType, Props, State extends LockableComponentState> extends LockableComponent<Props&{ path: string|null, result: ResultType|null }, State> {
+export class GenericSearchResultsContainer<ResultType, Props, State extends LockableComponentState> extends LockableComponent<Props&{ result: DirWorker.SearchResults<ResultType> }, State> {
 
 }
 
@@ -50,10 +50,7 @@ export class GenericSearchView<ResultType> extends LockableComponent<{ path: str
             return <div>
                 { this.state.results == null
                     ? "Waiting, or maybe it just crashed."
-                    : <div>
-                        <this.props.view path={this.state.results.path} enrichment={this.state.results.object} />
-                        <CuntentErrorView error={this.state.results.error} />
-                    </div>
+                    : <this.props.view result={this.state.results} />
                 }
             </div>
         })
