@@ -5,20 +5,18 @@ import LocaleKeys from '../Localize/Keys';
 import { join } from 'path'
 import { JsonConvert } from 'json2typescript'
 import { Enrichment } from 'cuntent-assembler/dist';
-
-export class DirWorkerError extends CuntentError { }
+import { EditingSession } from './EditingSession';
 
 export namespace DirWorker {
     const projectFileExtension = ".cundef"
     const enrichmentFileExtension = ".cuntent"
     
     const errors = {
-        searchError: err => new DirWorkerError(LocaleKeys.DIR_WORKER.SEARCH_ERROR, err),
-        readError: err => new DirWorkerError(LocaleKeys.DIR_WORKER.READ_ERROR, err),
-        parsingError: err => new DirWorkerError(LocaleKeys.DIR_WORKER.PARSING_ERROR, err),
+        notFoundError: () => new CuntentError(LocaleKeys.DIR_WORKER.NOT_FOUND),
+        searchError: err => new CuntentError(LocaleKeys.DIR_WORKER.SEARCH_ERROR, err),
     }
     
-    function findFileEndingWithIn(path: string, ending: string): Promise<string|null> {
+    function findFileEndingWithIn(path: string, ending: string): Promise<string> {
         return new Promise((fulfill, reject) => {
             fs.readdir(path, (err, files) => {
                 if (err) {
@@ -29,67 +27,17 @@ export namespace DirWorker {
                     return value.endsWith(ending)
                 })
                 if (cundefs == undefined) {
-                    fulfill(null)
+                    reject(errors.notFoundError())
                     return
                 }
                 fulfill(join(path, cundefs))
             })
         })
     }
-    
-    function readObjectFromJson<Type extends Object>(path: string, type: any): Promise<Type> {
-        return new Promise((fulfill, reject) => {
-            fs.readFile(path, (err, data) => {
-                if (err) {
-                    reject(errors.readError(err))
-                    return
-                }
-                let convert = new JsonConvert()
-                let obj: Type
-                try {
-                    let string = data.toString()
-                    let json = JSON.parse(string)
-                    obj = convert.deserialize(json, type)
-                } catch(error) {
-                    reject(errors.parsingError(error))
-                    return
-                }
-                fulfill(obj)
-            })
-        })
-    }
-    
-    function readObjectIn<Type>(path: string|null, type: any): Promise<Type|null> {
-        if (path == null) {
-            return new Promise(fulfill => fulfill(null))
-        }
-        return readObjectFromJson<Type>(path, type)
-    }
-    
-    export interface SearchResults<Type> {
-        path: string|null
-        object: Type|null
-        error: DirWorkerError|null
-    }
-    
-    function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<SearchResults<Type>> {
-        let foundPath: string|null = null
-    
-        return findFileEndingWithIn(path, fileext).then(path => {
-            foundPath = path
-            return readObjectIn<Type>(path, type)
-        }).then(project => {
-            return {
-                path: foundPath,
-                object: project,
-                error: null
-            }
-        }).catch(err => {
-            return {
-                path: foundPath,
-                object: null,
-                error: err
-            }
+
+    function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<EditingSession<Type>> {
+        return findFileEndingWithIn(path, fileext).then(fPath => {
+            return EditingSession.load<Type>(fPath, type)
         })
     }
     
