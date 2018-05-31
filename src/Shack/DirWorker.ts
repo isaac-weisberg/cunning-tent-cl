@@ -5,7 +5,7 @@ import LocaleKeys from '../Localize/Keys';
 import { join } from 'path'
 import { JsonConvert } from 'json2typescript'
 import { Enrichment } from 'cuntent-assembler/dist';
-import { EditingSession } from './EditingSession';
+import { EditingSession, ObjectView, PathView } from './EditingSession';
 import { EditingSessionObjectView, EditingSessionPathView } from '../Views/EditingSessionView/EditingSessionView';
 
 export namespace DirWorker {
@@ -36,7 +36,7 @@ export namespace DirWorker {
         })
     }
 
-    export function createEditingSessionForObjectAt<Type>(path: string, type: new () => Type, fileext: string, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView): Promise<EditingSession<Type>> {
+    export function createEditingSessionForObjectAt<Type>(path: string, type: new () => Type, fileext: string, objectRenderer?: ObjectView<Type>, pathRenderer?: PathView): Promise<EditingSession<Type>> {
         return findFileEndingWithIn(path, fileext).then(fPath => {
             return EditingSession.load<Type>(fPath, type, objectRenderer, pathRenderer)
         })

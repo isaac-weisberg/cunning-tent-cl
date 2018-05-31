@@ -6,6 +6,10 @@ import { SingleAtomicCollationView } from './CollationViews/SingleAtomicCollatio
 import { EditingSessionObjectView } from '../EditingSessionView/EditingSessionView';
 
 export class EnrichmentView extends EditingSessionObjectView<Enrichment> {
+    constructor(props) {
+        super(props)
+    }
+
     drawGenerics = () => {
         return this.props.object.generics.length == 0 
         ? this.localize(LocaleKeys.ASSET_COLLATION.NO_COLLATIONS)
@@ -24,4 +28,5 @@ export class EnrichmentView extends EditingSessionObjectView<Enrichment> {
             { this.drawSingleAtoms() }
         </div>
     }
+
 }

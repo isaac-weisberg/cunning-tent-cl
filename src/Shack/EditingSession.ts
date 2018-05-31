@@ -4,6 +4,7 @@ import { Enrichment } from "cuntent-assembler/dist";
 import CuntentError from '../Error/CuntentError';
 import LocaleKeys from '../Localize/Keys';
 import { EditingSessionObjectView, EditingSessionPathView } from '../Views/EditingSessionView/EditingSessionView';
+import { EnrichmentView } from '../Views/EnrichmentViews/EnrichmentView';
 
 function serialize<Type>(instance: Type): string {
     let convert = new JsonConvert()
@@ -37,8 +38,11 @@ const errors = {
     serializationError: err => new CuntentError(LocaleKeys.SESSION.PARSING_ERROR, err)
 }
 
+export type ObjectView<ObjectType> = new (props) => EditingSessionObjectView<ObjectType>
+export type PathView = new (props) => EditingSessionPathView
+
 export class EditingSession<Type> {
-    static load<Type>(path: string, type: new () => Type, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView): Promise<EditingSession<Type>> {
+    static load<Type>(path: string, type: new () => Type, objectRenderer?: ObjectView<Type>, pathRenderer?: PathView): Promise<EditingSession<Type>> {
         return new Promise((fulfill, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) {
@@ -58,7 +62,7 @@ export class EditingSession<Type> {
         })
     }
 
-    constructor(enrichment: Type, path: string, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView) {
+    constructor(enrichment: Type, path: string, objectRenderer?: ObjectView<Type>, pathRenderer?: PathView) {
         this.object = enrichment
         this.path = path
         this.objectRenderer = objectRenderer
@@ -85,6 +89,6 @@ export class EditingSession<Type> {
 
     path: string
     object: Type
-    objectRenderer?: new () => EditingSessionObjectView<Type>
-    pathRenderer?: new () => EditingSessionPathView
+    objectRenderer?: ObjectView<Type>
+    pathRenderer?: PathView
 }

@@ -1,15 +1,41 @@
 import * as React from 'react'
-import CuntentComponent from '../../Application/CuntentComponent';
-import { GenericSearchView } from '../Generic/GenericSearchView';
-import { DirWorker } from '../../Shack/DirWorker';
-import { EnrichmentContainer } from '../EnrichmentViews/EnrichmentContainer';
-import { ProjectContainer } from '../ProjectViews/ProjectContainer';
+import CuntentError from '../../Error/CuntentError';
+import { Enrichment } from 'cuntent-assembler/dist';
+import { EditingSession } from '../../Shack/EditingSession';
+import { LockableComponentState, LockableComponent } from '../../Application/LockableComponent';
+import { Components } from '../../Shack/Components';
+import { CuntentErrorView } from '../CuntentErrorView';
+import { EditingSessionView } from '../EditingSessionView/EditingSessionView';
 
-export class DirectoryContainer extends CuntentComponent<{ path: string }, {}> {
+export interface DirectoryContainerState extends LockableComponentState {
+    error: CuntentError|null
+    session: EditingSession<Enrichment>|null
+}
+
+export class DirectoryContainer extends LockableComponent<{ path: string }, DirectoryContainerState> {
+    state: DirectoryContainerState = { locked: true, error: null, session: null }
+
+    componentDidMount() {
+        this.reload()
+    }
+
+    reload = () => {
+        Components.createEnrichmentEditingSessionIn(this.props.path).then(session => {
+            this.setState(prev => { return {locked: false, session: session } })
+        }).catch(error => {
+            this.setState(prev => { return { locked: false, error: error }})
+        })
+    }
+
     render() {
-        return <div>
-            <GenericSearchView path={this.props.path} searcher={DirWorker.findProjectAt} view={ProjectContainer} />
-            <GenericSearchView path={this.props.path} searcher={DirWorker.findEnrichmentAt} view={EnrichmentContainer} />
-        </div>
+        return this.ifNotLocked(() => {
+            return <div>
+                { this.state.session != null
+                    ? <EditingSessionView session={this.state.session} />
+                    : null
+                }
+                < CuntentErrorView error={this.state.error} />
+            </div>
+        })
     }
 }

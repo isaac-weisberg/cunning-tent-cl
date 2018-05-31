@@ -20,9 +20,13 @@ export class EditingSessionView<SessionType> extends LockableComponent<{ session
 }
 
 export class EditingSessionPathView extends CuntentComponent<{ path: string }, {}> {
-
+    constructor(props) {
+        super(props)
+    }
 }
 
 export class EditingSessionObjectView<ObjectType> extends CuntentComponent<{ object: ObjectType }, {}> {
-
+    constructor(props) {
+        super(props)
+    }
 }
