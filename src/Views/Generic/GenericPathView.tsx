@@ -1,13 +1,10 @@
 import * as React from 'react'
-import CuntentComponent from '../../Application/CuntentComponent';
+import { EditingSessionPathView } from '../EditingSessionView/EditingSessionView';
 
-export class GenericPathView extends CuntentComponent<{ path: string|null, prepend: string, ifNull: string }, {}> {
+export class GenericPathView extends EditingSessionPathView {
     render() {
-        return <div>
-            { this.props.path != null
-                ? this.props.prepend.concat(this.props.path)
-                : this.props.ifNull
-            }
+        return <div style={{backgroundColor: "#23CE60"}}>
+            { this.props.path }
         </div>
     }
 }

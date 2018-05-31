@@ -3,6 +3,7 @@ import { JsonConvert } from 'json2typescript'
 import { Enrichment } from "cuntent-assembler/dist";
 import CuntentError from '../Error/CuntentError';
 import LocaleKeys from '../Localize/Keys';
+import { EditingSessionObjectView, EditingSessionPathView } from '../Views/EditingSessionView/EditingSessionView';
 
 function serialize<Type>(instance: Type): string {
     let convert = new JsonConvert()
@@ -16,7 +17,7 @@ function serialize<Type>(instance: Type): string {
     return data
 }
 
-function parse<Type>(buffer: Buffer, type: any): Type {
+function parse<Type>(buffer: Buffer, type: new () => Type): Type {
     let convert = new JsonConvert()
     let obj: Type
     try {
@@ -36,8 +37,11 @@ const errors = {
     serializationError: err => new CuntentError(LocaleKeys.SESSION.PARSING_ERROR, err)
 }
 
+export type ObjectRenderer<Type> = new () => EditingSessionObjectView<Type>
+export type PathRenderer = new () => EditingSessionPathView
+
 export class EditingSession<Type> {
-    static load<Type>(path: string, type: any): Promise<EditingSession<Type>> {
+    static load<Type>(path: string, type: new () => Type, objectRenderer?: ObjectRenderer<Type>, pathRenderer?: PathRenderer): Promise<EditingSession<Type>> {
         return new Promise((fulfill, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) {
@@ -51,23 +55,24 @@ export class EditingSession<Type> {
                     reject(error)
                     return
                 }
-                let session = new EditingSession(obj, path, type)
+                let session = new EditingSession(obj, path, objectRenderer, pathRenderer)
                 fulfill(session)
             })
         })
     }
 
-    constructor(enrichment: Type, path: string, type: any) {
-        this.enrichment = enrichment
+    constructor(enrichment: Type, path: string, objectRenderer?: ObjectRenderer<Type>, pathRenderer?: PathRenderer) {
+        this.object = enrichment
         this.path = path
-        this.type = type
+        this.objectRenderer = objectRenderer
+        this.pathRenderer = pathRenderer
     }
 
     save = () => {
         return new Promise<void>((fulfill, reject) => {
             let data: string
             try {
-                data = serialize(this.enrichment)
+                data = serialize(this.object)
             } catch(error) {
                 reject(error)
                 return
@@ -81,7 +86,8 @@ export class EditingSession<Type> {
         })
     }
 
-    private type: any
     path: string
-    enrichment: Type
+    object: Type
+    objectRenderer?: ObjectRenderer<Type>
+    pathRenderer?: PathRenderer
 }

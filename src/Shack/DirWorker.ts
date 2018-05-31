@@ -35,7 +35,7 @@ export namespace DirWorker {
         })
     }
 
-    function findObjectAt<Type>(path: string, type: any, fileext: string): Promise<EditingSession<Type>> {
+    function findObjectAt<Type>(path: string, type: new () => Type, fileext: string): Promise<EditingSession<Type>> {
         return findFileEndingWithIn(path, fileext).then(fPath => {
             return EditingSession.load<Type>(fPath, type)
         })
