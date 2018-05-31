@@ -37,11 +37,8 @@ const errors = {
     serializationError: err => new CuntentError(LocaleKeys.SESSION.PARSING_ERROR, err)
 }
 
-export type ObjectRenderer<Type> = new () => EditingSessionObjectView<Type>
-export type PathRenderer = new () => EditingSessionPathView
-
 export class EditingSession<Type> {
-    static load<Type>(path: string, type: new () => Type, objectRenderer?: ObjectRenderer<Type>, pathRenderer?: PathRenderer): Promise<EditingSession<Type>> {
+    static load<Type>(path: string, type: new () => Type, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView): Promise<EditingSession<Type>> {
         return new Promise((fulfill, reject) => {
             fs.readFile(path, (err, data) => {
                 if (err) {
@@ -61,7 +58,7 @@ export class EditingSession<Type> {
         })
     }
 
-    constructor(enrichment: Type, path: string, objectRenderer?: ObjectRenderer<Type>, pathRenderer?: PathRenderer) {
+    constructor(enrichment: Type, path: string, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView) {
         this.object = enrichment
         this.path = path
         this.objectRenderer = objectRenderer
@@ -88,6 +85,6 @@ export class EditingSession<Type> {
 
     path: string
     object: Type
-    objectRenderer?: ObjectRenderer<Type>
-    pathRenderer?: PathRenderer
+    objectRenderer?: new () => EditingSessionObjectView<Type>
+    pathRenderer?: new () => EditingSessionPathView
 }

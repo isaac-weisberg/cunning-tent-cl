@@ -6,6 +6,7 @@ import { join } from 'path'
 import { JsonConvert } from 'json2typescript'
 import { Enrichment } from 'cuntent-assembler/dist';
 import { EditingSession } from './EditingSession';
+import { EditingSessionObjectView, EditingSessionPathView } from '../Views/EditingSessionView/EditingSessionView';
 
 export namespace DirWorker {
     const projectFileExtension = ".cundef"
@@ -35,17 +36,17 @@ export namespace DirWorker {
         })
     }
 
-    function findObjectAt<Type>(path: string, type: new () => Type, fileext: string): Promise<EditingSession<Type>> {
+    export function createEditingSessionForObjectAt<Type>(path: string, type: new () => Type, fileext: string, objectRenderer?: new () => EditingSessionObjectView<Type>, pathRenderer?: new () => EditingSessionPathView): Promise<EditingSession<Type>> {
         return findFileEndingWithIn(path, fileext).then(fPath => {
-            return EditingSession.load<Type>(fPath, type)
+            return EditingSession.load<Type>(fPath, type, objectRenderer, pathRenderer)
         })
     }
     
     export function findEnrichmentAt(path: string) {
-        return findObjectAt<Enrichment>(path, Enrichment, enrichmentFileExtension)
+        return createEditingSessionForObjectAt<Enrichment>(path, Enrichment, enrichmentFileExtension)
     }
     
     export function findProjectAt(path: string) {
-        return findObjectAt<Project>(path, Project, projectFileExtension)
+        return createEditingSessionForObjectAt<Project>(path, Project, projectFileExtension)
     }
 }
